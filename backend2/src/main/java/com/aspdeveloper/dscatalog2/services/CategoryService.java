@@ -60,14 +60,14 @@ public class CategoryService {
 	}
 
 	public void delete(Long id) {
+		if (!repository.existsById(id)) {
+			throw new ResourceNotFoundException("Id não encontrado: " + id);
+		}
 		try {
 			repository.deleteById(id);
-		}
-		 catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Id não econtrado" + id);
-		}
-		catch (DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Violação de integridade");
 		}
 	}
+
 }
