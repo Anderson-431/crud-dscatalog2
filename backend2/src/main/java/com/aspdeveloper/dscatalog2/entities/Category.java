@@ -27,7 +27,7 @@ public class Category implements Serializable {
 	private Instant createdAt;
 
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private Instant updatedAt;
+	private Instant updateAt;
 
 	public Category() {
 	}
@@ -57,25 +57,27 @@ public class Category implements Serializable {
 		return createdAt;
 	}
 
-	public Instant getUpdatedAt() {
-		return updatedAt;
+	public Instant getUpdateAt() {
+		return updateAt;
 	}
-	
+
 	@PrePersist
 	public void prePersist() {
 		createdAt = Instant.now();
 	}
-	
+
 	@PreUpdate
 	public void preUpdate() {
-		updatedAt = Instant.now();
+		updateAt = Instant.now();
 	}
 
+	// Comparar rápida IDs
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
 
+	// Comparar detalhada e mais segura de IDs
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
